@@ -1,129 +1,67 @@
-﻿using System;
+﻿using Project.Service.Common;
+using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
-using Project.DAL;
-using Project.Model;
+using AutoMapper;
+using Project.Model.Common;
+using System.Net;
+using Project.Model.ViewModels;
 
 namespace Project.WebAPI.Controllers
 {
-    public class VehicleMakeController : Controller
+    public class VehicleMakeController : ApiController
     {
-        private VehicleContext db = new VehicleContext();
+        private IVehicleMakeService VMakeService;
 
-        // GET: VehicleMake
-        public ActionResult Index()
+        public VehicleMakeController(IVehicleMakeService vmakeservice)
         {
-            return View(db.VehicleMakes.ToList());
+            VMakeService = vmakeservice;
         }
 
-        // GET: VehicleMake/Details/5
-        public ActionResult Details(Guid? id)
+        public async Task<HttpResponseMessage> FetchVehicleMakers()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VehicleMake vehicleMake = db.VehicleMakes.Find(id);
-            if (vehicleMake == null)
-            {
-                return HttpNotFound();
-            }
-            return View(vehicleMake);
+            var VehicleMakeList = Mapper.Map<IEnumerable<IVehicleMakeViewModel>>(await VMakeService.GetAll());
+            return Request.CreateResponse(HttpStatusCode.OK, VehicleMakeList);
         }
 
-        // GET: VehicleMake/Create
-        public ActionResult Create()
+        public async Task<HttpResponseMessage> AddVehicleMaker(VehicleMakeViewModel vmakeviewmodel)
         {
-            return View();
+            if(String.IsNullOrEmpty(vmakeviewmodel.Name) || String.IsNullOrEmpty(vmakeviewmodel.Abrv))
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "You must input all required data.");
+            }
+
+            vmakeviewmodel.VehicleMakeId = Guid.NewGuid();
+            var Response = await VMakeService.Add(Mapper.Map<IVehicleMakeDomainModel>(vmakeviewmodel));
+            return Request.CreateResponse(HttpStatusCode.OK, Response);
         }
 
-        // POST: VehicleMake/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VehicleMakeId,Name,Abrv")] VehicleMake vehicleMake)
+        public async Task<HttpResponseMessage> EditVehicleMaker(VehicleMakeViewModel vmakeviewmodel)
         {
-            if (ModelState.IsValid)
+            var Finder = await VMakeService.Get(vmakeviewmodel.VehicleMakeId);
+            if(String.IsNullOrEmpty(Finder.Name) || String.IsNullOrEmpty(Finder.Abrv))
             {
-                vehicleMake.VehicleMakeId = Guid.NewGuid();
-                db.VehicleMakes.Add(vehicleMake);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Your input is incorrect");
+            }
+            else
+            {
+                Finder.Name = vmakeviewmodel.Name;
+                Finder.Abrv = vmakeviewmodel.Abrv;
             }
 
-            return View(vehicleMake);
+            var Response = await VMakeService.Update(Mapper.Map<IVehicleMakeDomainModel>(Finder));
+            return Request.CreateResponse(HttpStatusCode.OK, Response);
         }
 
-        // GET: VehicleMake/Edit/5
-        public ActionResult Edit(Guid? id)
+        public async Task<HttpResponseMessage> DeleteVehicleMaker(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VehicleMake vehicleMake = db.VehicleMakes.Find(id);
-            if (vehicleMake == null)
-            {
-                return HttpNotFound();
-            }
-            return View(vehicleMake);
-        }
-
-        // POST: VehicleMake/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VehicleMakeId,Name,Abrv")] VehicleMake vehicleMake)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(vehicleMake).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(vehicleMake);
-        }
-
-        // GET: VehicleMake/Delete/5
-        public ActionResult Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VehicleMake vehicleMake = db.VehicleMakes.Find(id);
-            if (vehicleMake == null)
-            {
-                return HttpNotFound();
-            }
-            return View(vehicleMake);
-        }
-
-        // POST: VehicleMake/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
-        {
-            VehicleMake vehicleMake = db.VehicleMakes.Find(id);
-            db.VehicleMakes.Remove(vehicleMake);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            var Destroyer = await VMakeService.Delete(id);
+            return Request.CreateResponse(HttpStatusCode.OK, Destroyer);
         }
     }
 }

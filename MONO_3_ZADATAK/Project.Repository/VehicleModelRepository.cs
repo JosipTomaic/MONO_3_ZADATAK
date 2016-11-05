@@ -40,7 +40,7 @@ namespace Project.Repository
 
         public async Task<IEnumerable<IVehicleModelDomainModel>> GetAll()
         {
-            return Mapper.Map<IVehicleModelDomainModel>(await Repository.GetAll());
+            return Mapper.Map<IEnumerable<IVehicleModelDomainModel>>(await Repository.GetAll<VehicleModel>());
         }
     }
 }

@@ -33,6 +33,11 @@ namespace Project.Service
             return await VehicleMakeRepo.Get(id);
         }
 
+        public async Task<IEnumerable<IVehicleMakeDomainModel>> GetAll()
+        {
+            return await VehicleMakeRepo.GetAll();
+        }
+
         public async Task<int> Update(IVehicleMakeDomainModel entity)
         {
             return await VehicleMakeRepo.Update(entity);

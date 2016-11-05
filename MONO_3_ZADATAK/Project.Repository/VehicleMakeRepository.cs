@@ -37,5 +37,10 @@ namespace Project.Repository
         {
             return await Repository.Update(Mapper.Map<VehicleMake>(entity));
         }
+
+        public async Task<IEnumerable<IVehicleMakeDomainModel>> GetAll()
+        {
+            return Mapper.Map<IEnumerable<IVehicleMakeDomainModel>>(await Repository.GetAll<VehicleMake>());
+        }
     }
 }

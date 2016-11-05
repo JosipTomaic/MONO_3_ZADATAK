@@ -1,134 +1,68 @@
-﻿using System;
+﻿using Project.Service.Common;
+using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Project.DAL;
-using Project.Model;
+using AutoMapper;
+using Project.Model.Common;
+using System.Web.Http;
+using System.Net;
+using Project.Model.ViewModels;
 
 namespace Project.WebAPI.Controllers
 {
-    public class VehicleModelController : Controller
+    public class VehicleModelController : ApiController
     {
-        private VehicleContext db = new VehicleContext();
+        private IVehicleModelService VModelService;
 
-        // GET: VehicleModel
-        public ActionResult Index()
+        public VehicleModelController(IVehicleModelService vmodelservice)
         {
-            var vehicleModel = db.VehicleModel.Include(v => v.VehicleMake);
-            return View(vehicleModel.ToList());
+            VModelService = vmodelservice;
         }
 
-        // GET: VehicleModel/Details/5
-        public ActionResult Details(Guid? id)
+        public async Task<HttpResponseMessage> FetchVehicleModels()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VehicleModel vehicleModel = db.VehicleModel.Find(id);
-            if (vehicleModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(vehicleModel);
+            var VehicleModelList = Mapper.Map<IEnumerable<IVehicleModelViewModel>>(await VModelService.GetAll());
+            return Request.CreateResponse(HttpStatusCode.OK, VehicleModelList);
         }
 
-        // GET: VehicleModel/Create
-        public ActionResult Create()
+        public async Task<HttpResponseMessage> AddVehicleModel(VehicleModelViewModel vmodelviewmodel)
         {
-            ViewBag.VehicleMakeId = new SelectList(db.VehicleMakes, "VehicleMakeId", "Name");
-            return View();
+            if(String.IsNullOrEmpty(vmodelviewmodel.Model) || String.IsNullOrEmpty(vmodelviewmodel.Abrv))
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "You must input all required data.");
+            }
+
+            vmodelviewmodel.VehicleMakeId = Guid.NewGuid();
+
+            var Response = await VModelService.Add(Mapper.Map<IVehicleModelDomainModel>(vmodelviewmodel));
+
+            return Request.CreateResponse(HttpStatusCode.OK, Response);
         }
 
-        // POST: VehicleModel/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VehicleModelId,VehicleMakeId,Model,Abrv")] VehicleModel vehicleModel)
+        public async Task<HttpResponseMessage> EditVehicleModel(VehicleModelViewModel vmodelviewmodel)
         {
-            if (ModelState.IsValid)
+            var Finder = await VModelService.Get(vmodelviewmodel.VehicleModelId);
+            if(String.IsNullOrEmpty(Finder.Model) || String.IsNullOrEmpty(Finder.Abrv))
             {
-                vehicleModel.VehicleModelId = Guid.NewGuid();
-                db.VehicleModel.Add(vehicleModel);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Your input is incorrect.");
             }
-
-            ViewBag.VehicleMakeId = new SelectList(db.VehicleMakes, "VehicleMakeId", "Name", vehicleModel.VehicleMakeId);
-            return View(vehicleModel);
+            else
+            {
+                Finder.Model = vmodelviewmodel.Model;
+                Finder.Abrv = vmodelviewmodel.Abrv;
+            }
+            var Response = await VModelService.Update(Mapper.Map<IVehicleModelDomainModel>(Finder));
+            return Request.CreateResponse(HttpStatusCode.OK, Response);
         }
 
-        // GET: VehicleModel/Edit/5
-        public ActionResult Edit(Guid? id)
+        public async Task<HttpResponseMessage> DeleteVehicleModel(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VehicleModel vehicleModel = db.VehicleModel.Find(id);
-            if (vehicleModel == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.VehicleMakeId = new SelectList(db.VehicleMakes, "VehicleMakeId", "Name", vehicleModel.VehicleMakeId);
-            return View(vehicleModel);
-        }
-
-        // POST: VehicleModel/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VehicleModelId,VehicleMakeId,Model,Abrv")] VehicleModel vehicleModel)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(vehicleModel).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.VehicleMakeId = new SelectList(db.VehicleMakes, "VehicleMakeId", "Name", vehicleModel.VehicleMakeId);
-            return View(vehicleModel);
-        }
-
-        // GET: VehicleModel/Delete/5
-        public ActionResult Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VehicleModel vehicleModel = db.VehicleModel.Find(id);
-            if (vehicleModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(vehicleModel);
-        }
-
-        // POST: VehicleModel/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
-        {
-            VehicleModel vehicleModel = db.VehicleModel.Find(id);
-            db.VehicleModel.Remove(vehicleModel);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            var Destroyer = await VModelService.Delete(id);
+            return Request.CreateResponse(HttpStatusCode.OK, Destroyer);
         }
     }
 }

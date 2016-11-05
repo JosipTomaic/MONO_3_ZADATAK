@@ -10,6 +10,7 @@ namespace Project.Service.Common
     public interface IVehicleModelService
     {
         Task<IVehicleModelDomainModel> Get(Guid id);
+        Task<IEnumerable<IVehicleModelDomainModel>> GetAll();
         Task<int> Add(IVehicleModelDomainModel entity);
         Task<int> Update(IVehicleModelDomainModel entity);
         Task<int> Delete(Guid id);

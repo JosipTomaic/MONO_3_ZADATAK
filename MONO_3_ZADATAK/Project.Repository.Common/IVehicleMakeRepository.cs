@@ -10,6 +10,7 @@ namespace Project.Repository.Common
     public interface IVehicleMakeRepository
     {
         Task<IVehicleMakeDomainModel> Get(Guid id);
+        Task<IEnumerable<IVehicleMakeDomainModel>> GetAll();
         Task<int> Add(IVehicleMakeDomainModel entity);
         Task<int> Update(IVehicleMakeDomainModel entity);
         Task<int> Delete(Guid id);

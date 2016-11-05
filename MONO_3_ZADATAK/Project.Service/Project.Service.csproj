@@ -42,6 +42,14 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -53,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NinjectBindings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VehicleMakeService.cs" />
     <Compile Include="VehicleModelService.cs" />
@@ -65,14 +74,6 @@
     <ProjectReference Include="..\Project.Common\Project.Common.csproj">
       <Project>{f2bac3de-d2e0-4668-9f6d-d557760c00ce}</Project>
       <Name>Project.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Project.DAL.Common\Project.DAL.Common.csproj">
-      <Project>{34c44f27-920f-4fd3-b132-ceacb935b42d}</Project>
-      <Name>Project.DAL.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Project.DAL\Project.DAL.csproj">
-      <Project>{2a474a05-7c66-4a04-9a29-82464b3d3de4}</Project>
-      <Name>Project.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Project.Model.Common\Project.Model.Common.csproj">
       <Project>{b17c52c6-d0e4-448b-a37b-26cee052f0aa}</Project>
