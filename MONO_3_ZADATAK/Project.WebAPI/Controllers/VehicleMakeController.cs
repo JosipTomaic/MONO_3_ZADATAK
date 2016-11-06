@@ -23,12 +23,24 @@ namespace Project.WebAPI.Controllers
             VMakeService = vmakeservice;
         }
 
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetAllVMake")]
         public async Task<HttpResponseMessage> FetchVehicleMakers()
         {
             var VehicleMakeList = Mapper.Map<IEnumerable<IVehicleMakeViewModel>>(await VMakeService.GetAll());
             return Request.CreateResponse(HttpStatusCode.OK, VehicleMakeList);
         }
 
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetVMake")]
+        public async Task<HttpResponseMessage> GetVehicleMaker(Guid id)
+        {
+            var Response = Mapper.Map<VehicleMakeViewModel>(await VMakeService.Get(id));
+            return Request.CreateResponse(HttpStatusCode.OK, Response);
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("AddVMake")]
         public async Task<HttpResponseMessage> AddVehicleMaker(VehicleMakeViewModel vmakeviewmodel)
         {
             if(String.IsNullOrEmpty(vmakeviewmodel.Name) || String.IsNullOrEmpty(vmakeviewmodel.Abrv))
@@ -41,6 +53,8 @@ namespace Project.WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, Response);
         }
 
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("EditVMake")]
         public async Task<HttpResponseMessage> EditVehicleMaker(VehicleMakeViewModel vmakeviewmodel)
         {
             var Finder = await VMakeService.Get(vmakeviewmodel.VehicleMakeId);
@@ -58,6 +72,8 @@ namespace Project.WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, Response);
         }
 
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.Route("DeleteVMake")]
         public async Task<HttpResponseMessage> DeleteVehicleMaker(Guid id)
         {
             var Destroyer = await VMakeService.Delete(id);

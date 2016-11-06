@@ -23,12 +23,24 @@ namespace Project.WebAPI.Controllers
             VModelService = vmodelservice;
         }
 
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetAllVModel")]
         public async Task<HttpResponseMessage> FetchVehicleModels()
         {
             var VehicleModelList = Mapper.Map<IEnumerable<IVehicleModelViewModel>>(await VModelService.GetAll());
             return Request.CreateResponse(HttpStatusCode.OK, VehicleModelList);
         }
 
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetVModel")]
+        public async Task<HttpResponseMessage> GetVehicleModel(Guid id)
+        {
+            var Response = Mapper.Map<VehicleModelViewModel>(await VModelService.Get(id));
+            return Request.CreateResponse(HttpStatusCode.OK, Response);
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("AddVModel")]
         public async Task<HttpResponseMessage> AddVehicleModel(VehicleModelViewModel vmodelviewmodel)
         {
             if(String.IsNullOrEmpty(vmodelviewmodel.Model) || String.IsNullOrEmpty(vmodelviewmodel.Abrv))
@@ -43,6 +55,8 @@ namespace Project.WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, Response);
         }
 
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("EditVModel")]
         public async Task<HttpResponseMessage> EditVehicleModel(VehicleModelViewModel vmodelviewmodel)
         {
             var Finder = await VModelService.Get(vmodelviewmodel.VehicleModelId);
@@ -59,6 +73,8 @@ namespace Project.WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, Response);
         }
 
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.Route("DeleteVModel")]
         public async Task<HttpResponseMessage> DeleteVehicleModel(Guid id)
         {
             var Destroyer = await VModelService.Delete(id);
