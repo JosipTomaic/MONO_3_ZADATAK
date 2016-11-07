@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="DomainModels\VehicleMakeDomainModel.cs" />
     <Compile Include="DomainModels\VehicleModelDomainModel.cs" />
+    <Compile Include="MapperConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DatabaseModels\VehicleMake.cs" />
     <Compile Include="DatabaseModels\VehicleModel.cs" />

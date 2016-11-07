@@ -20,16 +20,6 @@ namespace Project.Service
         {
             Bind<IVehicleMakeService>().To<VehicleMakeService>();
             Bind<IVehicleModelService>().To<VehicleModelService>();
-            Bind<IUnitOfWork>().To<UnitOfWork>();
-            Bind<IRepository>().To<Repository.Repository>();
-            Bind<IVehicleMakeRepository>().To<VehicleMakeRepository>();
-            Bind<IVehicleModelRepository>().To<VehicleModelRepository>();
-            Bind<IVehicleMakeViewModel>().To<VehicleMakeViewModel>();
-            Bind<IVehicleModelViewModel>().To<VehicleModelViewModel>();
-            Bind<IVehicleMakeDomainModel>().To<VehicleMakeDomainModel>();
-            Bind<IVehicleModelDomainModel>().To<VehicleModelDomainModel>();
-            Bind<IVehicleMake>().To<VehicleMake>();
-            Bind<IVehicleModel>().To<VehicleModel>();
         }
     }
 }

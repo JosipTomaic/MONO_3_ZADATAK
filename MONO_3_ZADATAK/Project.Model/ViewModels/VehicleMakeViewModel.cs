@@ -13,6 +13,6 @@ namespace Project.Model.ViewModels
         public string Name { get; set; }
         public string Abrv { get; set; }
 
-        public ICollection<VehicleModelViewModel> VehicleModels { get; set; }
+        public virtual ICollection<VehicleModelViewModel> VehicleModels { get; set; }
     }
 }

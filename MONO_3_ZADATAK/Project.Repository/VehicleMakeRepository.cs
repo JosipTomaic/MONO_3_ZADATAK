@@ -12,7 +12,7 @@ namespace Project.Repository
 {
     public class VehicleMakeRepository : IVehicleMakeRepository
     {
-        private IRepository Repository { get; set; }
+        private readonly IRepository Repository;
 
         public VehicleMakeRepository(IRepository repository)
         {

@@ -11,9 +11,11 @@ using Project.Model.Common;
 using System.Web.Http;
 using System.Net;
 using Project.Model.ViewModels;
+using Project.Model.DomainModels;
 
 namespace Project.WebAPI.Controllers
 {
+    [System.Web.Http.RoutePrefix("api/vehiclemodel")]
     public class VehicleModelController : ApiController
     {
         private IVehicleModelService VModelService;
@@ -27,7 +29,7 @@ namespace Project.WebAPI.Controllers
         [System.Web.Http.Route("GetAllVModel")]
         public async Task<HttpResponseMessage> FetchVehicleModels()
         {
-            var VehicleModelList = Mapper.Map<IEnumerable<IVehicleModelViewModel>>(await VModelService.GetAll());
+            var VehicleModelList = Mapper.Map<IEnumerable<VehicleModelViewModel>>(await VModelService.GetAll());
             return Request.CreateResponse(HttpStatusCode.OK, VehicleModelList);
         }
 
@@ -50,7 +52,7 @@ namespace Project.WebAPI.Controllers
 
             vmodelviewmodel.VehicleMakeId = Guid.NewGuid();
 
-            var Response = await VModelService.Add(Mapper.Map<IVehicleModelDomainModel>(vmodelviewmodel));
+            var Response = await VModelService.Add(Mapper.Map<VehicleModelDomainModel>(vmodelviewmodel));
 
             return Request.CreateResponse(HttpStatusCode.OK, Response);
         }
@@ -69,7 +71,7 @@ namespace Project.WebAPI.Controllers
                 Finder.Model = vmodelviewmodel.Model;
                 Finder.Abrv = vmodelviewmodel.Abrv;
             }
-            var Response = await VModelService.Update(Mapper.Map<IVehicleModelDomainModel>(Finder));
+            var Response = await VModelService.Update(Mapper.Map<VehicleModelDomainModel>(Finder));
             return Request.CreateResponse(HttpStatusCode.OK, Response);
         }
 

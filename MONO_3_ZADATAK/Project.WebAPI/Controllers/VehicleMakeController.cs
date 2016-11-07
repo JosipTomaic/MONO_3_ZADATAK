@@ -11,12 +11,14 @@ using AutoMapper;
 using Project.Model.Common;
 using System.Net;
 using Project.Model.ViewModels;
+using Project.Model.DomainModels;
 
 namespace Project.WebAPI.Controllers
 {
+    [System.Web.Http.RoutePrefix("api/vehiclemake")]
     public class VehicleMakeController : ApiController
     {
-        private IVehicleMakeService VMakeService;
+        private readonly IVehicleMakeService VMakeService;
 
         public VehicleMakeController(IVehicleMakeService vmakeservice)
         {
@@ -27,7 +29,7 @@ namespace Project.WebAPI.Controllers
         [System.Web.Http.Route("GetAllVMake")]
         public async Task<HttpResponseMessage> FetchVehicleMakers()
         {
-            var VehicleMakeList = Mapper.Map<IEnumerable<IVehicleMakeViewModel>>(await VMakeService.GetAll());
+            var VehicleMakeList = Mapper.Map<IEnumerable<VehicleMakeViewModel>>(await VMakeService.GetAll());
             return Request.CreateResponse(HttpStatusCode.OK, VehicleMakeList);
         }
 
@@ -49,7 +51,7 @@ namespace Project.WebAPI.Controllers
             }
 
             vmakeviewmodel.VehicleMakeId = Guid.NewGuid();
-            var Response = await VMakeService.Add(Mapper.Map<IVehicleMakeDomainModel>(vmakeviewmodel));
+            var Response = await VMakeService.Add(Mapper.Map<VehicleMakeDomainModel>(vmakeviewmodel));
             return Request.CreateResponse(HttpStatusCode.OK, Response);
         }
 
@@ -68,7 +70,7 @@ namespace Project.WebAPI.Controllers
                 Finder.Abrv = vmakeviewmodel.Abrv;
             }
 
-            var Response = await VMakeService.Update(Mapper.Map<IVehicleMakeDomainModel>(Finder));
+            var Response = await VMakeService.Update(Mapper.Map<VehicleMakeDomainModel>(Finder));
             return Request.CreateResponse(HttpStatusCode.OK, Response);
         }
 

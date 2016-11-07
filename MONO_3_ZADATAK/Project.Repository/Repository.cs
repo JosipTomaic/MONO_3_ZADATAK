@@ -7,6 +7,7 @@ using Project.Repository.Common;
 using Project.DAL;
 using Project.DAL.Common;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 
 namespace Project.Repository
 {
@@ -23,14 +24,14 @@ namespace Project.Repository
         public async Task<int> Add<T>(T entity) where T : class
         {
             Context.Set<T>().Add(entity);
-            return await UnitOfWork.Save();
+            return await Context.SaveChangesAsync();
         }
 
         public async Task<int> Delete<T>(Guid id) where T : class
         {
             T entity = await Get<T>(id);
             Context.Set<T>().Remove(entity);
-            return await UnitOfWork.Save();
+            return await Context.SaveChangesAsync();
         }
 
         public async Task<T> Get<T>(Guid id) where T : class
@@ -40,8 +41,8 @@ namespace Project.Repository
 
         public async Task<int> Update<T>(T entity) where T : class
         {
-            Context.Entry(entity).State = EntityState.Modified;
-            return await UnitOfWork.Save();
+            Context.Set<T>().AddOrUpdate(entity);
+            return await Context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<T>> GetAll<T>() where T : class
