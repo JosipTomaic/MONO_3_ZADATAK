@@ -50,7 +50,7 @@ namespace Project.WebAPI.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "You must input all required data.");
             }
 
-            vmodelviewmodel.VehicleMakeId = Guid.NewGuid();
+            vmodelviewmodel.VehicleModelId = Guid.NewGuid();
 
             var Response = await VModelService.Add(Mapper.Map<VehicleModelDomainModel>(vmodelviewmodel));
 
