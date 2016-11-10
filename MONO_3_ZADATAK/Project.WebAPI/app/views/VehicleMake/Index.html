@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Vehicle Makers</title>
+	<meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div ng-app="vehiclesApplication" ng-controller="vehicleMakeController">
+        <nav class="navbar navbar-default" style="border-bottom: 2px solid lightblue">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">List of Vehicle Makers</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/Home/Index">Home</a></li>
+                    <li><a href="/app/views/VehicleModel/Index.html">Vehicle Models</a></li>
+                </ul>
+            </div>
+        </nav>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Abrv</th>
+                    <th>Edit, Details, Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="x in VehicleMakes">
+                    <td>{{x.Name}}</td>
+                    <td>{{x.Abrv}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        var app = angular.module('vehiclesApplication', []);
+        app.controller('vehicleMakeController', function ($scope, $http) {
+            $http.get("/api/VehicleMake/GetAllVMake")
+            .then(function (response) {
+                $scope.VehicleMakes = response.data;
+            });
+        });
+    </script>
+</body>
+</html>
