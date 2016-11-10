@@ -49,5 +49,10 @@ namespace Project.Repository
         {
             return await Context.Set<T>().ToListAsync();
         }
+
+        public IQueryable<T> GetWhere<T>() where T : class
+        {
+            return Context.Set<T>();
+        }
     }
 }

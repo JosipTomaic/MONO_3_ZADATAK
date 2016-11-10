@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.Model.Common
+namespace Project.DAL.Common
 {
-    public interface IVehicleModelViewModel
+    public interface IVehicleMake
     {
-        Guid VehicleModelId { get; set; }
         Guid VehicleMakeId { get; set; }
-        string Model { get; set; }
+        string Name { get; set; }
         string Abrv { get; set; }
     }
 }

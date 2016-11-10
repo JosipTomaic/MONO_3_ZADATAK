@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Project.Model.Common;
 using Project.Repository.Common;
 using Project.Service.Common;
+using Project.Model.DomainModels;
 
 namespace Project.Service
 {
@@ -18,7 +19,7 @@ namespace Project.Service
             VehicleModelRepo = vehiclemodelrepo;
         }
 
-        public async Task<int> Add(IVehicleModelDomainModel entity)
+        public async Task<int> Add(VehicleModelDomainModel entity)
         {
             return await VehicleModelRepo.Add(entity);
         }
@@ -38,7 +39,7 @@ namespace Project.Service
             return await VehicleModelRepo.GetAll();
         }
 
-        public async Task<int> Update(IVehicleModelDomainModel entity)
+        public async Task<int> Update(VehicleModelDomainModel entity)
         {
             return await VehicleModelRepo.Update(entity);
         }

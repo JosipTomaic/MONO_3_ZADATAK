@@ -149,6 +149,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="app\controllers\" />
+    <Folder Include="app\js\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
@@ -193,9 +195,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MapperConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\VehicleMakeViewModel.cs" />
+    <Compile Include="ViewModels\VehicleModelViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\views\VehicleMake\Index.html" />
+    <Content Include="app\views\VehicleModel\Index.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -267,6 +274,10 @@
     <ProjectReference Include="..\Project.DAL\Project.DAL.csproj">
       <Project>{2a474a05-7c66-4a04-9a29-82464b3d3de4}</Project>
       <Name>Project.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Project.DI\Project.DI.csproj">
+      <Project>{7b9a7b49-0828-49cd-b17a-786bae487ca1}</Project>
+      <Name>Project.DI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Project.Model.Common\Project.Model.Common.csproj">
       <Project>{b17c52c6-d0e4-448b-a37b-26cee052f0aa}</Project>

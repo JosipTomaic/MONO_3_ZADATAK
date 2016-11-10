@@ -14,6 +14,6 @@ namespace Project.Model.DomainModels
         public string Model { get; set; }
         public string Abrv { get; set; }
 
-        public virtual VehicleMakeDomainModel VehicleMake { get; set; }
+        public virtual IVehicleMakeDomainModel VehicleMake { get; set; }
     }
 }

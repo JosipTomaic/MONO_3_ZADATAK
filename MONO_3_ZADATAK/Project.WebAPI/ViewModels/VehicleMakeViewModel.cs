@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Project.Model.Common;
 
-namespace Project.Model.ViewModels
+namespace Project.WebAPI.ViewModels
 {
-    public class VehicleMakeViewModel : IVehicleMakeViewModel
+    public class VehicleMakeViewModel
     {
         public Guid VehicleMakeId { get; set; }
         public string Name { get; set; }

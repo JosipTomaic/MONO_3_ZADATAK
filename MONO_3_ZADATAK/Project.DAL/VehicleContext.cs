@@ -4,9 +4,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Project.Model;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using Project.DAL.Common;
+using Project.DAL.DatabaseModels;
 
 namespace Project.DAL
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Project.Model.Common;
+using Project.Model.DomainModels;
 
 namespace Project.Repository.Common
 {
@@ -11,8 +12,9 @@ namespace Project.Repository.Common
     {
         Task<IVehicleModelDomainModel> Get(Guid id);
         Task<IEnumerable<IVehicleModelDomainModel>> GetAll();
-        Task<int> Add(IVehicleModelDomainModel entity);
-        Task<int> Update(IVehicleModelDomainModel entity);
+        Task<int> Add(VehicleModelDomainModel entity);
+        Task<int> Update(VehicleModelDomainModel entity);
         Task<int> Delete(Guid id);
+        Task<ICollection<IVehicleModelDomainModel>> FetchModels(Guid id);
     }
 }

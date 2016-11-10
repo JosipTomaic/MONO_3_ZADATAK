@@ -1,4 +1,5 @@
 ﻿using Project.Model.Common;
+using Project.Model.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace Project.Service.Common
     {
         Task<IVehicleModelDomainModel> Get(Guid id);
         Task<IEnumerable<IVehicleModelDomainModel>> GetAll();
-        Task<int> Add(IVehicleModelDomainModel entity);
-        Task<int> Update(IVehicleModelDomainModel entity);
+        Task<int> Add(VehicleModelDomainModel entity);
+        Task<int> Update(VehicleModelDomainModel entity);
         Task<int> Delete(Guid id);
     }
 }

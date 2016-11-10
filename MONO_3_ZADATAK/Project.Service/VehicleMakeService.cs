@@ -6,19 +6,22 @@ using System.Threading.Tasks;
 using Project.Model.Common;
 using Project.Repository.Common;
 using Project.Service.Common;
+using Project.Model.DomainModels;
 
 namespace Project.Service
 {
     public class VehicleMakeService : IVehicleMakeService
     {
         private readonly IVehicleMakeRepository VehicleMakeRepo;
+        private readonly IVehicleModelRepository VehicleModelRepo;
 
-        public VehicleMakeService(IVehicleMakeRepository vehiclemakerepo)
+        public VehicleMakeService(IVehicleMakeRepository vehicleMakeRepo, IVehicleModelRepository vehicleModelRepo)
         {
-            VehicleMakeRepo = vehiclemakerepo;
+            VehicleMakeRepo = vehicleMakeRepo;
+            VehicleModelRepo = vehicleModelRepo;
         }
 
-        public async Task<int> Add(IVehicleMakeDomainModel entity)
+        public async Task<int> Add(VehicleMakeDomainModel entity)
         {
             return await VehicleMakeRepo.Add(entity);
         }
@@ -30,7 +33,11 @@ namespace Project.Service
 
         public async Task<IVehicleMakeDomainModel> Get(Guid id)
         {
-            return await VehicleMakeRepo.Get(id);
+            //return await VehicleMakeRepo.Get(id);
+            var Response = await VehicleMakeRepo.Get(id);
+            var ModelsForMaker = await VehicleModelRepo.FetchModels(id);
+            Response.VehicleModels = ModelsForMaker;
+            return Response;
         }
 
         public async Task<IEnumerable<IVehicleMakeDomainModel>> GetAll()
@@ -38,7 +45,7 @@ namespace Project.Service
             return await VehicleMakeRepo.GetAll();
         }
 
-        public async Task<int> Update(IVehicleMakeDomainModel entity)
+        public async Task<int> Update(VehicleMakeDomainModel entity)
         {
             return await VehicleMakeRepo.Update(entity);
         }

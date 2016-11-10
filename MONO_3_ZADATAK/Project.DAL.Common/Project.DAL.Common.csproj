@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IVehicleContext.cs" />
+    <Compile Include="IVehicleMake.cs" />
+    <Compile Include="IVehicleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

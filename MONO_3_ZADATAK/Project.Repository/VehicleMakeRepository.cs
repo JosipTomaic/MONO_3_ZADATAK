@@ -7,6 +7,8 @@ using Project.Model.Common;
 using Project.Repository.Common;
 using Project.Model;
 using AutoMapper;
+using Project.Model.DomainModels;
+using Project.DAL.DatabaseModels;
 
 namespace Project.Repository
 {
@@ -18,7 +20,7 @@ namespace Project.Repository
         {
             Repository = repository;
         }
-        public async Task<int> Add(IVehicleMakeDomainModel entity)
+        public async Task<int> Add(VehicleMakeDomainModel entity)
         {
             return await Repository.Add(Mapper.Map<VehicleMake>(entity));
         }
@@ -33,7 +35,7 @@ namespace Project.Repository
             return Mapper.Map<IVehicleMakeDomainModel>(await Repository.Get<VehicleMake>(id));
         }
 
-        public async Task<int> Update(IVehicleMakeDomainModel entity)
+        public async Task<int> Update(VehicleMakeDomainModel entity)
         {
             return await Repository.Update(Mapper.Map<VehicleMake>(entity));
         }

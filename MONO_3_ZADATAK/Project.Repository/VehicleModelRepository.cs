@@ -7,6 +7,9 @@ using Project.Repository.Common;
 using Project.Model.Common;
 using Project.Model;
 using AutoMapper;
+using Project.Model.DomainModels;
+using System.Data.Entity;
+using Project.DAL.DatabaseModels;
 
 namespace Project.Repository
 {
@@ -18,7 +21,7 @@ namespace Project.Repository
         {
             Repository = repository;
         }
-        public async Task<int> Add(IVehicleModelDomainModel entity)
+        public async Task<int> Add(VehicleModelDomainModel entity)
         {
             return await Repository.Add(Mapper.Map<VehicleModel>(entity));
         }
@@ -28,7 +31,7 @@ namespace Project.Repository
             return await Repository.Delete<VehicleModel>(id);
         }
 
-        public async Task<int> Update(IVehicleModelDomainModel entity)
+        public async Task<int> Update(VehicleModelDomainModel entity)
         {
             return await Repository.Update(Mapper.Map<VehicleModel>(entity));
         }
@@ -40,7 +43,12 @@ namespace Project.Repository
 
         public async Task<IEnumerable<IVehicleModelDomainModel>> GetAll()
         {
-            return Mapper.Map<IEnumerable<IVehicleModelDomainModel>>(await Repository.GetAll<VehicleModel>());
+            return Mapper.Map<IEnumerable<IVehicleModelDomainModel>>(await Repository.GetWhere<VehicleModel>().Include(i => i.VehicleMake).ToListAsync());
+        }
+
+        public async Task<ICollection<IVehicleModelDomainModel>> FetchModels(Guid id)
+        {
+            return Mapper.Map<ICollection<IVehicleModelDomainModel>>(await Repository.GetWhere<VehicleModel>().Where(i => i.VehicleMakeId == id).ToListAsync());
         }
     }
 }

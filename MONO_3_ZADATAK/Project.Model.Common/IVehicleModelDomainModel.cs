@@ -12,5 +12,6 @@ namespace Project.Model.Common
         Guid VehicleMakeId { get; set; }
         string Model { get; set; }
         string Abrv { get; set; }
+        IVehicleMakeDomainModel VehicleMake { get; set; }
     }
 }

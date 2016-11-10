@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
-using Project.Model.Common;
 using System.Web.Http;
 using System.Net;
-using Project.Model.ViewModels;
 using Project.Model.DomainModels;
+using Project.WebAPI.ViewModels;
 
 namespace Project.WebAPI.Controllers
 {
@@ -19,17 +18,21 @@ namespace Project.WebAPI.Controllers
     public class VehicleModelController : ApiController
     {
         private IVehicleModelService VModelService;
+        private IVehicleMakeService VMakeService;
 
-        public VehicleModelController(IVehicleModelService vmodelservice)
+        public VehicleModelController(IVehicleModelService vmodelservice, IVehicleMakeService vMakeService)
         {
             VModelService = vmodelservice;
+            VMakeService = vMakeService;
         }
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetAllVModel")]
         public async Task<HttpResponseMessage> FetchVehicleModels()
         {
+            var Makers = await VMakeService.GetAll();
             var VehicleModelList = Mapper.Map<IEnumerable<VehicleModelViewModel>>(await VModelService.GetAll());
+
             return Request.CreateResponse(HttpStatusCode.OK, VehicleModelList);
         }
 
