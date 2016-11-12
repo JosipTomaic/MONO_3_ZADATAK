@@ -21,6 +21,8 @@
                 </ul>
             </div>
         </nav>
+        <h1>Vehicle Makers</h1>
+        <a href="CreateNew.html">Create new Maker</a>
         <table class="table">
             <thead>
                 <tr>
@@ -33,18 +35,15 @@
                 <tr ng-repeat="x in VehicleMakes">
                     <td>{{x.Name}}</td>
                     <td>{{x.Abrv}}</td>
+                    <td>
+                        <a href="Edit.html">Edit</a>
+                        <a href="/app/views/VehicleMake/Details.html/{{x.VehicleMakeId}}">Details</a>
+                        <a href="Delete.html">Delete</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <script>
-        var app = angular.module('vehiclesApplication', []);
-        app.controller('vehicleMakeController', function ($scope, $http) {
-            $http.get("/api/VehicleMake/GetAllVMake")
-            .then(function (response) {
-                $scope.VehicleMakes = response.data;
-            });
-        });
-    </script>
+    <script src="/app/controllers/VehicleMakeController.js"></script>
 </body>
 </html>

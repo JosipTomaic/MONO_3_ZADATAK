@@ -149,7 +149,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\controllers\" />
     <Folder Include="app\js\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
@@ -201,7 +200,18 @@
     <Compile Include="ViewModels\VehicleModelViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\controllers\DetailsVehicleMakeController.js" />
+    <Content Include="app\controllers\VehicleMakeController.js" />
+    <Content Include="app\controllers\VehicleModelController.js" />
+    <Content Include="app\views\VehicleMake\CreateNew.html" />
+    <Content Include="app\views\VehicleMake\Delete.html" />
+    <Content Include="app\views\VehicleMake\Details.html" />
+    <Content Include="app\views\VehicleMake\Edit.html" />
     <Content Include="app\views\VehicleMake\Index.html" />
+    <Content Include="app\views\VehicleModel\CreateNew.html" />
+    <Content Include="app\views\VehicleModel\Delete.html" />
+    <Content Include="app\views\VehicleModel\Details.html" />
+    <Content Include="app\views\VehicleModel\Edit.html" />
     <Content Include="app\views\VehicleModel\Index.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />

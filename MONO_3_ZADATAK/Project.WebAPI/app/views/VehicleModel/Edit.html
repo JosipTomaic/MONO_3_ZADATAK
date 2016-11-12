@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Vehicle Model</title>
+	<meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div ng-app="VehicleModelEdit">
+        <div class="container-fluid">
+            <div class="row" style="border-bottom: 2px solid lightblue">
+                <div class="col-md-6">
+                    <h1>Edit</h1>
+                </div>
+                <div class="col-md-offset-10 text-center">
+                    <h1><a href="/app/views/VehicleMake/Index.html">Back to list</a></h1>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row" style="margin-top: 5%;">
+                    <div class="col-md-6 col-md-offset-4">
+                        <div class="col-md-2">
+                            <label for="usr">Model:</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="Model">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 2%; margin-bottom: 5%;">
+                    <div class="col-md-6 col-md-offset-4">
+                        <div class="col-md-2">
+                            <label for="usr">Abrv:</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="Abrv">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success center-block">Confirm</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

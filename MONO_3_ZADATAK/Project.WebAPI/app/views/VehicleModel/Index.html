@@ -21,12 +21,15 @@
                 </ul>
             </div>
         </nav>
+        <h1>Vehicle Models</h1>
+        <a href="CreateNew.html">Create new Model</a>
         <table class="table">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Model</th>
                     <th>Abrv</th>
+                    <th>Edit, Details, Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,18 +37,15 @@
                     <td>{{x.VehicleMake.Name}}</td>
                     <td>{{x.Model}}</td>
                     <td>{{x.Abrv}}</td>
+                    <td>
+                        <a href="">Edit</a>
+                        <a href="">Details</a>
+                        <a href="">Delete</a>
+                    </td>
                 </tr>
             </tbody>
         </table> 
     </div>
-    <script>
-        var app = angular.module('vehiclesApplication', []);
-        app.controller('vehicleModelController', function ($scope, $http) {
-            $http.get("/api/VehicleModel/GetAllVModel")
-            .then(function (response) {
-                $scope.VehicleModels = response.data;
-            });
-        });
-    </script>
+    <script src="/app/controllers/VehicleModelController.js"></script>
 </body>
 </html>
