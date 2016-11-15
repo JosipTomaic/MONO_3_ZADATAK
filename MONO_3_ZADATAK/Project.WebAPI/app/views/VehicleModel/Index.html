@@ -1,51 +1,26 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>Vehicle Models</title>
-    <meta charset="utf-8" />
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div ng-app="vehiclesApplication" ng-controller="vehicleModelController">
-        <nav class="navbar navbar-default" style="border-bottom: 2px solid lightblue">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">List of Vehicle Models</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="/Home/Index">Home</a></li>
-                    <li><a href="/app/views/VehicleMake/Index.html">Vehicle Makers</a></li>
-                </ul>
-            </div>
-        </nav>
-        <h1>Vehicle Models</h1>
-        <a href="CreateNew.html">Create new Model</a>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Model</th>
-                    <th>Abrv</th>
-                    <th>Edit, Details, Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="x in VehicleModels">
-                    <td>{{x.VehicleMake.Name}}</td>
-                    <td>{{x.Model}}</td>
-                    <td>{{x.Abrv}}</td>
-                    <td>
-                        <a href="">Edit</a>
-                        <a href="">Details</a>
-                        <a href="">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table> 
-    </div>
-    <script src="/app/controllers/VehicleModelController.js"></script>
-</body>
-</html>
+﻿<div ng-controller="VehicleModelController">
+    <h1>Vehicle Models</h1>
+    <a href="#/VehicleModel/CreateNew">Create new Model</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Model</th>
+                <th>Abrv</th>
+                <th>Edit, Details, Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="x in VehicleModels">
+                <td>{{x.VehicleMake.Name}}</td>
+                <td>{{x.Model}}</td>
+                <td>{{x.Abrv}}</td>
+                <td>
+                    <a ng-controller="EditVehicleModelController" href="#/VehicleModel/Edit/{{x.VehicleModelId}}">Edit</a>
+                    <a href="#/VehicleModel/Details/{{x.VehicleModelId}}">Details</a>
+                    <a ng-controller="DeleteVehicleModelController" ng-click="DeleteModel(x.VehicleModelId)">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table> 
+</div>

@@ -1,6 +1,7 @@
-﻿//var app = angular.module('vehiclesApplication', []);
-angular.module('vehiclesApplication', []).controller('DetailsVehicleMakeController', function ($scope, $http, $param) {
-    $http.get('/api/vehiclemake/GetVMake?id=' + $param.id).then(function (response) {
-        $scope.VehicleMakes = response.data;
+﻿VehiclesApplication.controller('DetailsVehicleMakeController', ['$scope', '$http', '$stateParams', DetailsVehicleMakeController]);
+function DetailsVehicleMakeController($scope, $http, $stateParams) {
+    $http.get('/api/VehicleMake/GetVMake?id=' + $stateParams.id)
+    .then(function (response) {
+        $scope.VehicleMakes = response;
     });
-});
+};

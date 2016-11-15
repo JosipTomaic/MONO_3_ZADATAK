@@ -23,6 +23,12 @@ namespace Project.WebAPI
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
+                        "~/Scripts/angular.js",
+                        "~/Scripts/AngularUI/ui-router.js"));
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                        "~/app/app.js",
+                        "~/app/controllers/*Controller.js"));
         }
     }
 }

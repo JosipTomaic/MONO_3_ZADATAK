@@ -1,10 +1,39 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-	<meta charset="utf-8" />
-</head>
-<body>
-
-</body>
-</html>
+﻿<div ng-controller="createNewVehicleMakeController">
+    <div class="container-fluid">
+        <div class="row" style="border-bottom: 2px solid lightblue">
+            <div class="col-md-6">
+                <h1>Create new</h1>
+            </div>
+            <div class="col-md-offset-10 text-center">
+                <h1><a href="#/VehicleMake">Back to list</a></h1>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row" style="margin-top: 5%;">
+                <div class="col-md-6 col-md-offset-4">
+                    <div class="col-md-2">
+                        <label>Name:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="Name" ng-model="Name">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 2%; margin-bottom: 5%;">
+                <div class="col-md-6 col-md-offset-4">
+                    <div class="col-md-2">
+                        <label>Abrv:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="Abrv" ng-model="Abrv">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 2%; margin-bottom: 5%;">
+                <div class="col-md-5 col-md-offset-5">
+                    <button type="button" ng-click="AddVehicleMake()" class="btn btn-success center-block">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

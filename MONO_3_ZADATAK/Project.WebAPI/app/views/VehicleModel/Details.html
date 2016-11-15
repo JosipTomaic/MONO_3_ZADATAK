@@ -1,10 +1,32 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-	<meta charset="utf-8" />
-</head>
-<body>
-
-</body>
-</html>
+﻿<div ng-controller="DetailsVehicleModelController">
+    <h1>Vehicle Model</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>Abrv</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{VehicleModels.data.Model}}</td>
+                <td>{{VehicleModels.data.Abrv}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h1>Vehicle Maker</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Abrv</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{VehicleModels.data.VehicleMake.Name}}</td>
+                <td>{{VehicleModels.data.VehicleMake.Abrv}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
