@@ -1,4 +1,4 @@
-﻿var VehiclesApplication = angular.module("VehiclesApplication", ['ui.router']);
+﻿var VehiclesApplication = angular.module("VehiclesApplication", ['ui.router', 'angularUtils.directives.dirPagination']);
 
 VehiclesApplication.config(function ($stateProvider, $urlRouterProvider) {
 

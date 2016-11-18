@@ -1,17 +1,32 @@
-﻿<div ng-controller="VehicleModelController">
+﻿<div ng-controller="VehicleModelController" ng-init="FetchVehicleModels()">
     <h1>Vehicle Models</h1>
-    <a href="#/VehicleModel/CreateNew">Create new Model</a>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <a href="#/VehicleModel/CreateNew">Create new Model</a>
+        </div>
+        <div class="form-group">
+            <label for="searchbox">Search:</label>
+            <input type="text" id="searchbox" ng-model="search" class="form-control" placeholder="Search">
+        </div>
+    </form>
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Model</th>
-                <th>Abrv</th>
+                <th ng-click="sort('Name')">Name
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('Model')">Model
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Model'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('Abrv')">Abrv
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Abrv'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
                 <th>Edit, Details, Delete</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="x in VehicleModels">
+            <!--<tr ng-repeat="x in VehicleModels">-->
+            <tr dir-paginate="x in VehicleModels|orderBy:sortKey:reverse|filter:search|itemsPerPage: 4">
                 <td>{{x.VehicleMake.Name}}</td>
                 <td>{{x.Model}}</td>
                 <td>{{x.Abrv}}</td>
@@ -22,5 +37,6 @@
                 </td>
             </tr>
         </tbody>
-    </table> 
+    </table>
+    <dir-pagination-controls max-size="4" boundary-links="true" direction-links="true"></dir-pagination-controls>
 </div>
